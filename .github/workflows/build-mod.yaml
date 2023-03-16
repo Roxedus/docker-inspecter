@@ -1,4 +1,4 @@
-name: Build Image
+name: Build Mod
 
 on:
   workflow_dispatch:
@@ -19,6 +19,7 @@ jobs:
       - name: Create VARS
         id: vars
         run: |
+          echo "commit=${GITHUB_REF//refs\/heads\//}" >> $GITHUB_OUTPUT
           echo "tag=$(echo ${GITHUB_REPOSITORY//docker-/} | tr '[:upper:]' '[:lower:]'):mod" >> $GITHUB_OUTPUT
 
       - name: Login to GitHub Container Registry
@@ -36,4 +37,4 @@ jobs:
           file: Dockerfile.mod
           tags: |
             ghcr.io/${{ steps.vars.outputs.tag }}
-            ghcr.io/${{ steps.vars.outputs.tag }}-${GITHUB_REF//refs\/heads\//}
+            ghcr.io/${{ steps.vars.outputs.tag }}-${{ github.sha }}
