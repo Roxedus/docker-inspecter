@@ -2,7 +2,7 @@
 version: "2.1"
 services:
   mitmproxy:
-    image: test
+    image: ghcr.io/roxedus/inspecter:9.0.1
     container_name: mitmproxy
     environment:
       - PUID=$PUID
