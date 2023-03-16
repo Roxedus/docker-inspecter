@@ -88,7 +88,7 @@ jobs:
         run: |
           IMAGE=ghcr.io/$(echo ${GITHUB_REPOSITORY//docker-/} | tr '[:upper:]' '[:lower:]')
           TAG=${{ needs.build.outputs.upstream }}
-          SOURCE=${IMAGE}:${GITHUB_REF//refs\/heads\//}
+          SOURCE=${IMAGE}:${TAG}
           docker buildx imagetools create -t ${IMAGE}:${{ needs.build.outputs.time }}     ${SOURCE}-linux-amd64 ${SOURCE}-linux-arm-v7 ${SOURCE}-linux-arm64
           docker buildx imagetools create -t ${IMAGE}:${{ needs.build.outputs.upstream }} ${SOURCE}-linux-amd64 ${SOURCE}-linux-arm-v7 ${SOURCE}-linux-arm64
           if [[ ${GITHUB_REF//refs\/heads\//} == main ]]; then
