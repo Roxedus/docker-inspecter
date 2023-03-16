@@ -1,0 +1,37 @@
+---
+version: "2.1"
+services:
+  mitmproxy:
+    image: test
+    container_name: mitmproxy
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=Etc/UTC
+    volumes:
+      - certs:/mitm # using a docker volume for permission and persistence reasons
+    ports:
+      - 42070:42070 # The webportal for mitmweb runs on 72070
+      #- 8080:42069 # The http proxy runs on port 42069
+      - 8443:8443 # WebUI port of the current target container
+    tty: true # This exposes MITM verbose messages to the container log
+    cap_add:
+      - NET_ADMIN # This container messes with iptables
+    sysctls:
+      - net.ipv4.ip_forward=1
+  target:
+    image: linuxserver/unifi-controller:latest
+    container_name: target
+    network_mode: service:mitmproxy
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=Europe/London
+    tmpfs:
+      - /config:exec
+    volumes:
+      - certs:/cert:ro # Mounts certificates from the MITM container
+      - ./custom-cont-init.d:/custom-cont-init.d:ro # Mounts script responsible for certificate injection into various keystores
+
+volumes:
+  certs:

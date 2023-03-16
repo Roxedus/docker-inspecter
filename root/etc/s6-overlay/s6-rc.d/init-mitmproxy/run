@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv bash
+
+iptables -t nat -A OUTPUT -p tcp -m owner ! --uid-owner 65534 --dport 443 -j REDIRECT --to-port 42069
+iptables -t nat -A OUTPUT -p tcp -m owner ! --uid-owner 65534 --dport 80 -j REDIRECT --to-port 42069
+
+
+[[ ! -f /mitm/config.yaml ]] && \
+    cp /defaults/config.yaml /mitm/config.yaml
+
+chown 65534:65534 -R /mitm
+chmod 744 -R /mitm
+
+# if [ ! -f "/mitm/mitmproxy-ca.pem" ]; then
+#     /app/mitmproxy/mitmdump --set server=false --set confdir=/mitm
+#     mitmpid=$!
+
+#     until [ ! -e /mitm/mitmproxy-ca.pem ] || [ ! -e /mitm/mitmproxy-ca-cert.pem ] || [ ! -e /mitm/mitmproxy-ca-cert.p12 ] || [ ! -e /mitm/mitmproxy-ca-cert.cer ]
+#     do
+#         sleep 1
+#         echo "no cert yet"
+#     done
+
+#     kill -9 $mitmpid 2>&1 /dev/null
+# fi
