@@ -41,6 +41,7 @@ if [ ! -d "/mitm" ]; then
     chmod +rx /mitm/mitmproxy*
 
     echo -n "/mitm/mitmproxy-ca.pem" >/run/s6/container_environment/CURL_CA_BUNDLE
+    echo -n "--use-openssl-ca" >/run/s6/container_environment/NODE_OPTIONS #https://stackoverflow.com/questions/29283040/how-to-add-custom-certificate-authority-ca-to-nodejs
 
     if [ $distro == "debian" ]; then
         mkdir -p /usr/share/ca-certificates/mitm
