@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        architecture: [linux-arm-v7, linux-arm64, linux-amd64]
+        architecture: [linux-arm64, linux-amd64]
     outputs:
       time: ${{ steps.vars.outputs.time }}
       upstream: ${{ steps.vars.outputs.upstream }}
@@ -89,8 +89,8 @@ jobs:
           IMAGE=ghcr.io/$(echo ${GITHUB_REPOSITORY//docker-/} | tr '[:upper:]' '[:lower:]')
           TAG=${{ needs.build.outputs.upstream }}
           SOURCE=${IMAGE}:${TAG}
-          docker buildx imagetools create -t ${IMAGE}:${{ needs.build.outputs.time }}     ${SOURCE}-linux-amd64 ${SOURCE}-linux-arm-v7 ${SOURCE}-linux-arm64
-          docker buildx imagetools create -t ${IMAGE}:${{ needs.build.outputs.upstream }} ${SOURCE}-linux-amd64 ${SOURCE}-linux-arm-v7 ${SOURCE}-linux-arm64
+          docker buildx imagetools create -t ${IMAGE}:${{ needs.build.outputs.time }}     ${SOURCE}-linux-amd64 ${SOURCE}-linux-arm64
+          docker buildx imagetools create -t ${IMAGE}:${{ needs.build.outputs.upstream }} ${SOURCE}-linux-amd64 ${SOURCE}-linux-arm64
           if [[ ${GITHUB_REF//refs\/heads\//} == main ]]; then
-          docker buildx imagetools create -t ${IMAGE}:latest                              ${SOURCE}-linux-amd64 ${SOURCE}-linux-arm-v7 ${SOURCE}-linux-arm64
+          docker buildx imagetools create -t ${IMAGE}:latest                              ${SOURCE}-linux-amd64 ${SOURCE}-linux-arm64
           fi
