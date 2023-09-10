@@ -22,7 +22,7 @@ jobs:
       upstream: ${{ steps.vars.outputs.upstream }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Create VARS
         id: vars
         run: |
