@@ -22,7 +22,7 @@ RUN \
   mkdir -p /app/mitmproxy && \
   curl -o \
     /tmp/mitmproxy.tar.gz -L \
-        "https://snapshots.mitmproxy.org/${MITMPROXY_RELEASE}/mitmproxy-${MITMPROXY_RELEASE}-linux.tar.gz" && \
+        "https://snapshots.mitmproxy.org/${MITMPROXY_RELEASE}/mitmproxy-${MITMPROXY_RELEASE}-linux-x86_64.tar.gz" && \
   tar xf /tmp/mitmproxy.tar.gz -C \
     /app/mitmproxy  && \
   chmod +x /app/mitmproxy/mitmdump /app/mitmproxy/mitmproxy /app/mitmproxy/mitmweb && \
