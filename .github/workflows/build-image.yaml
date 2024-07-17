@@ -54,7 +54,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.4.1
         with:
           push: true
           attests: type=sbom,generator=docker/buildkit-syft-scanner
