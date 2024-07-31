@@ -47,7 +47,7 @@ jobs:
           driver-opts: image=moby/buildkit:master #v0.10.5
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3.2.0
+        uses: docker/login-action@v3.3.0
         with:
           registry: ghcr.io
           username: roxedus
@@ -76,7 +76,7 @@ jobs:
     needs: [build]
     steps:
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3.2.0
+        uses: docker/login-action@v3.3.0
         with:
           registry: ghcr.io
           username: roxedus
